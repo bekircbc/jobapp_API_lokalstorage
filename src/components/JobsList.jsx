@@ -1,80 +1,15 @@
-import _jobs from "../data/data.json";
-import { useState } from "react";
-
-_jobs.forEach((job) => {
-  job.status = "send";
-});
-
-export const Jobs = () => {
-  const [displayKind, setDisplayKind] = useState("full");
-  const [jobs, setJobs] = useState(_jobs);
-
-  const handleToggleView = () => {
-    setDisplayKind(displayKind === "full" ? "list" : "full");
-  };
-
-  const handleStatusChange = (job) => {
-    switch (job.status) {
-      case "send":
-        job.status = "wait";
-        break;
-      case "wait":
-        job.status = "interview";
-        break;
-      case "interview":
-        job.status = "declined";
-        break;
-      case "declined":
-        job.status = "accepted";
-        break;
-      case "accepted":
-        job.status = "send";
-        break;
-    }
-    setJobs([...jobs]);
-  };
-
+export const JobsList = ({ jobs }) => {
   return (
-    <>
-      <h1>Job Application Process</h1>
-      <button className="toggle" onClick={handleToggleView}>
-        Toggle View
-      </button>
-      {displayKind === "full" ? (
-        <div className="jobs">
-          {jobs.map((job, index) => {
-            return (
-              <div key={index} className={`job ${job.status}`}>
-                <div className="header">
-                  <div className="position">
-                    <a href={job.url}>{job.position}</a>
-                  </div>
-                  <button
-                    onClick={() => handleStatusChange(job)}
-                    className="status"
-                  >
-                    {job.status}
-                  </button>
-                </div>
-                <div className="skills">{job.skills}</div>
-                {job.status !== "declined" && (
-                  <div className="bulkText">{job.bulkText}</div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        <ul className="jobsList">
-          {jobs.map((job, index) => {
-            return (
-              <li key={index} className="job">
-                <a href={job.url}>{job.position}</a>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-    </>
+    <ul className="jobsList">
+      {jobs.map((job, index) => {
+        return (
+          <div key={index}>
+            <li key={index}>
+              <a href={job.url}>{job.position}</a>
+            </li>
+          </div>
+        );
+      })}
+    </ul>
   );
 };

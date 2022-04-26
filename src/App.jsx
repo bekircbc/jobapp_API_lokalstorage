@@ -1,4 +1,4 @@
-import { Jobs } from "./components/Jobs";
+import { JobsList } from "./components/JobsList";
 import { useState } from "react";
 import "./App.scss";
 
@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div className="App">
-      <Jobs />
+      <JobsList />
     </div>
   );
 }

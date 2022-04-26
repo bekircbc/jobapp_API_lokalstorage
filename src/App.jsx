@@ -1,18 +1,45 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.scss";
 import _jobs from "./data/data.json";
 import { JobsFull } from "./components/JobsFull";
 import { JobsList } from "./components/JobsList";
 
 _jobs.forEach((job) => {
-  job.status = "send";
+  job.status = "accepted";
 });
 
 const statuses = ["send", "wait", "interview", "declined", "accepted"];
 
 function App() {
-  const [displayKind, setDisplayKind] = useState("full");
-  const [jobs, setJobs] = useState(_jobs);
+  const [displayKind, setDisplayKind] = useState("");
+  const [jobs, setJobs] = useState([]);
+
+  const saveToLocalStorage = () => {
+    const jobAppState = {
+      displayKind,
+      jobs,
+    };
+    localStorage.setItem("jobAppState", JSON.stringify(jobAppState));
+  };
+
+  const loadFromLocalStorage = () => {
+    const jobAppState = JSON.parse(localStorage.getItem("jobAppState"));
+    if (jobAppState === null) {
+      setDisplayKind("full");
+      setJobs(_jobs);
+    } else {
+      setDisplayKind(jobAppState.displayKind);
+      setJobs(jobAppState.jobs);
+    }
+  };
+
+  useEffect(() => {
+    loadFromLocalStorage();
+  }, []);
+
+  useEffect(() => {
+    saveToLocalStorage();
+  }, [displayKind, jobs]);
 
   const handleToggleView = () => {
     const _displayKind = displayKind === "full" ? "list" : "full";
@@ -32,9 +59,7 @@ function App() {
   return (
     <div className="App">
       <h1>Job Application Process</h1>
-      <button className="toggle" onClick={handleToggleView}>
-        Toggle View
-      </button>
+      <button onClick={handleToggleView}>Toggle View</button>
       {displayKind === "full" ? (
         <JobsFull jobs={jobs} handleStatusChange={handleStatusChange} />
       ) : (

@@ -32,7 +32,9 @@ function App() {
   return (
     <div className="App">
       <h1>Job Application Process</h1>
-      <button onClick={handleToggleView}>Toggle View</button>
+      <button className="toggle" onClick={handleToggleView}>
+        Toggle View
+      </button>
       {displayKind === "full" ? (
         <JobsFull jobs={jobs} handleStatusChange={handleStatusChange} />
       ) : (

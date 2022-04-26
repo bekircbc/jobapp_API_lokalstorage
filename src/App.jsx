@@ -7,7 +7,7 @@ import { JobsList } from "./components/JobsList";
 const techItemsUrl = "https://edwardtanguay.netlify.app/share/techItems.json";
 
 _jobs.forEach((job) => {
-  job.status = "accepted";
+  job.status = "send";
 });
 
 const statuses = ["send", "wait", "interview", "declined", "accepted"];
@@ -72,8 +72,9 @@ function App() {
   return (
     <div className="App">
       <h1>Job Application Process</h1>
-      <div>techitems: {techItems.length}</div>
-      <button onClick={handleToggleView}>Toggle View</button>
+      <button className="toggle" onClick={handleToggleView}>
+        Toggle View
+      </button>
       {displayKind === "full" ? (
         <JobsFull
           jobs={jobs}

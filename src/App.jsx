@@ -40,7 +40,7 @@ function App() {
   const loadTechItems = () => {
     (async () => {
       const response = await fetch(techItemsUrl);
-      const _techItems = await response.json();
+      let _techItems = await response.json();
       setTechItems(_techItems);
     })();
   };
@@ -75,7 +75,11 @@ function App() {
       <div>techitems: {techItems.length}</div>
       <button onClick={handleToggleView}>Toggle View</button>
       {displayKind === "full" ? (
-        <JobsFull jobs={jobs} handleStatusChange={handleStatusChange} />
+        <JobsFull
+          jobs={jobs}
+          handleStatusChange={handleStatusChange}
+          techItems={techItems}
+        />
       ) : (
         <JobsList jobs={jobs} />
       )}

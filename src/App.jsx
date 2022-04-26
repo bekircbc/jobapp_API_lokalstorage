@@ -5,7 +5,7 @@ import { JobsFull } from "./components/JobsFull";
 import { JobsList } from "./components/JobsList";
 
 _jobs.forEach((job) => {
-  job.status = "accepted";
+  job.status = "send";
 });
 
 const statuses = ["send", "wait", "interview", "declined", "accepted"];
